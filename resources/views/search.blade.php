@@ -6,26 +6,18 @@
     <title>search</title>
 </head>
 <body>
+<p>Слова для поиска: berluti, brioni, блейзер, брюки, костюм...</p>
 <form action="{{ route('search') }}" method='post' enctype='multipart/form-data'>
 @csrf
-<select id="trade_mark" name="trade_mark">
-    <option value="None">None</option>
-    <option value="Brioni">Brioni</option>
-    <option value="Berluti">Berluti</option>
-</select>
-<br><br>
-<select id="name" name="name">
-    <option value="None">None</option>
-    <option value="Blazer">Blazer</option>
-    <option value="Suit">Suit</option>
-    <option value="Trousers">Trousers</option>
-</select>
-<p>Дата производства: <input type="date" name="date">
+<input type="text" name='search' id="search" required placeholder="Enter word..."  class="@error('search') is-invalid @else is-valid @enderror">
+         @error('search')
+         <b>{{ $message }}</b>
+         @enderror
 <br><br>
          <input type="submit" value="Search">
 </form>
   
-@if (is_object($rowData))
+@if (count($searchData) != 0)
 <table>
 <thead>
 <tr>
@@ -43,7 +35,7 @@
 </tr>
 </thead>
 <tbody>
-@foreach ($rowData as $item)
+@foreach ($searchData as $item)
 <tr>
     <td>{{ $item->trade_mark }}</td>
     <td>{{ $item->name }}</td>
